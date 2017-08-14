@@ -7,6 +7,8 @@
  * @author hao
  */
 
+namespace Haosblog\WikiSDK;
+
 class Application
 {
     
