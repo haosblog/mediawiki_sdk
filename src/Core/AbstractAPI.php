@@ -10,11 +10,11 @@
 namespace Haosblog\WikiSDK\Core;
 
 use InvalidArgumentException;
-
-use GuzzleHttp\Client;
+use Haosblog\WikiSDK\Application;
 
 class AbstractAPI
 {
+
     /**
      * Http instance
      * 
@@ -23,20 +23,31 @@ class AbstractAPI
     protected $http;
 
     /**
+     * instance of the Application
+     * 
+     * @var Application 
+     */
+    protected $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
      * Get the Http instance
      * 
      * @return Http
      */
     protected function getHttp()
     {
-        if(!$this->http instanceof Http){
+        if (!$this->http instanceof Http) {
             $this->http = new Http();
         }
-        
+
         return $this->http;
     }
-    
-    
+
     /**
      * GET request.
      *
@@ -60,28 +71,39 @@ class AbstractAPI
     {
         return $this->getHttp()->post($url, $options);
     }
-    
+
     /**
      * POST request the API and decode as json
      * 
      * @param string $url
      * @param array $options
      */
-    protected function postAndParseJson($url, $options = []){
+    protected function postAndParseJson($url, $options = [])
+    {
+        $options = $this->setFormat($options);
         return $this->parseJSON($this->post($url, $options)->getBody());
     }
-    
-    
+
     /**
      * GET request the API and decode as json
      * 
      * @param string $url
      * @param array $options
      */
-    protected function getAndParseJson($url, $options = []){
+    protected function getAndParseJson($url, $options = [])
+    {
+        $options = $this->setFormat($options);
         return $this->parseJSON($this->get($url, $options)->getBody());
     }
-    
+
+    protected function setFormat($options, $format = 'json')
+    {
+        if (!isset($options['format']) || $options['format'] != $format) {
+            $options['format'] = $format;
+        }
+
+        return $options;
+    }
 
     /**
      * 
@@ -99,7 +121,7 @@ class AbstractAPI
             return false;
         }
 
-        try{
+        try {
             $contents = \GuzzleHttp\json_decode($body, true);
             Log::debug('API response decoded:', compact('contents'));
         } catch (InvalidArgumentException $ex) {
@@ -107,11 +129,11 @@ class AbstractAPI
                 'ErrorMessage' => $ex->getMessage(),
                 'OriginalData' => $body,
             ]);
-            
+
             throw $ex;
         }
 
         return $contents;
     }
-    
+
 }
