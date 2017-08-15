@@ -9,23 +9,25 @@
 
 namespace Haosblog\WikiSDK;
 
+use Haosblog\WikiSDK\Query\Query;
+
 class Application
 {
-    
+
     /**
-     * the domain of the wiki website
+     * the base url of the wiki website
      * 
      * @var string
      */
-    protected $wikiDomain = '';
+    protected $baseUrl = '';
 
     /**
-     * the query action instance
+     * the query action instances
      * 
-     * @var type 
+     * @var array 
      */
     protected $actionQuery;
-    
+
     /**
      * construct
      * 
@@ -33,13 +35,28 @@ class Application
      */
     public function __construct($config)
     {
-        $this->wikiDomain = $config['domain'];
-    }
-    
-    
-    public function getQuery(){
-        if(!$this->actionQuery instanceof Query){
-            
+        if (isset($config['domain'])) {
+            $this->baseUrl = $config['domain'];
         }
     }
+
+    /**
+     * get the base url
+     * 
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
+    }
+
+    public function getQuery()
+    {
+        if (!$this->actionQuery instanceof Query) {
+            $this->actionQuery = new Query($this);
+        }
+        
+        return $this->actionQuery;
+    }
+
 }
