@@ -28,7 +28,7 @@ class AbstractAPI
      * @var Application 
      */
     protected $app;
-
+    
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -57,6 +57,7 @@ class AbstractAPI
      */
     protected function get($url, array $options = [])
     {
+        $url = $this->formatUrl($url);
         return $this->getHttp()->get($url, $options);
     }
 
@@ -69,6 +70,7 @@ class AbstractAPI
      */
     protected function post($url, $options = [])
     {
+        $url = $this->formatUrl($url);
         return $this->getHttp()->post($url, $options);
     }
 
@@ -80,7 +82,7 @@ class AbstractAPI
      */
     protected function postAndParseJson($url, $options = [])
     {
-        $options = $this->setFormat($options);
+        $options = $this->setOptionsFormat($options);
         return $this->parseJSON($this->post($url, $options)->getBody());
     }
 
@@ -92,11 +94,17 @@ class AbstractAPI
      */
     protected function getAndParseJson($url, $options = [])
     {
-        $options = $this->setFormat($options);
+        $options = $this->setOptionsFormat($options);
         return $this->parseJSON($this->get($url, $options)->getBody());
     }
+    
+    protected function formatUrl($url){
+        $baseUrl = $this->app->getBaseUrl();
+        
+        return $baseUrl . $url;
+    }
 
-    protected function setFormat($options, $format = 'json')
+    protected function setOptionsFormat($options, $format = 'json')
     {
         if (!isset($options['format']) || $options['format'] != $format) {
             $options['format'] = $format;

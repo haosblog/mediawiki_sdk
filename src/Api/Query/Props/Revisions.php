@@ -2,7 +2,7 @@
 
 /**
  * --------------------------------------------------------------------------
- * Description of Revisions
+ * query prop params revisions
  *
  * --------------------------------------------------------------------------
  * @create 2017-8-15 0:01:21
@@ -10,9 +10,9 @@
  * --------------------------------------------------------------------------
  */
 
-namespace Haosblog\WikiSDK\Query\Props;
+namespace Haosblog\WikiSDK\Api\Query\Props;
 
-use Haosblog\WikiSDK\Query\AbstractParams;
+use Haosblog\WikiSDK\Api\AbstractParams;
 
 class Revisions extends AbstractParams
 {
@@ -33,6 +33,7 @@ class Revisions extends AbstractParams
         'prop',
         'limit',
         'expandtemplates',
+        'generatexml',
         'parse',
         'section',
         'diffto',
@@ -51,4 +52,16 @@ class Revisions extends AbstractParams
         'continue',
     ];
     
+    /**
+     * filter the options
+     * 
+     * @param type $options
+     */
+    protected function filterOptions($options)
+    {
+        if(isset($options['rvparse']) && $options['rvparse'] === false){
+            unset($options['rvparse']);
+        }
+    }
+
 }

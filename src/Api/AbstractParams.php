@@ -10,7 +10,7 @@
  * --------------------------------------------------------------------------
  */
 
-namespace Haosblog\WikiSDK\Query;
+namespace Haosblog\WikiSDK\Api;
 
 abstract class AbstractParams
 {
@@ -49,10 +49,14 @@ abstract class AbstractParams
         $resultOptions = [];
         
         foreach($options as $key -> $value) { // each the params, and find out the legavls
-            if(in_array($key, $this->optionNameWithoutPre) || in_array($key, $optionName)) {
+            if(in_array($key, $this->optionNameWithoutPre)) {
+                $resultOptions[$this->optionNamePre . $key] = $value;
+            } elseif(in_array($key, $optionName)) {
                 $resultOptions[$key] = $value;
             }
         }
+        
+        $this->filterOptions($resultOptions);
         
         // set the legavls to $this->options
         $this->options = $resultOptions;
@@ -82,4 +86,6 @@ abstract class AbstractParams
     public function getOptions() {
         return $this->options;
     }
+    
+    abstract protected function filterOptions($options);
 }

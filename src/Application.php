@@ -9,7 +9,7 @@
 
 namespace Haosblog\WikiSDK;
 
-use Haosblog\WikiSDK\Query\Query;
+use Haosblog\WikiSDK\Api\Query\Query;
 
 class Application
 {
