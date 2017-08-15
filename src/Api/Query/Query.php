@@ -9,7 +9,7 @@
 
 namespace Haosblog\WikiSDK\Api\Query;
 
-use Haosblog\WikiSDK\Core\AbstractAPI;
+use Haosblog\WikiSDK\Api\AbstractAPI;
 use Haosblog\WikiSDK\Api\TraitAPI;
 
 class Query extends AbstractAPI

@@ -7,7 +7,7 @@
  * @author hao
  */
 
-namespace Haosblog\WikiSDK\Core;
+namespace Haosblog\WikiSDK\Api;
 
 use InvalidArgumentException;
 use Haosblog\WikiSDK\Application;
