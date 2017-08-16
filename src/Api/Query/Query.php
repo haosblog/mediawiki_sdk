@@ -10,12 +10,16 @@
 namespace Haosblog\WikiSDK\Api\Query;
 
 use Haosblog\WikiSDK\Api\AbstractAPI;
-use Haosblog\WikiSDK\Api\TraitAPI;
+use Haosblog\WikiSDK\Api\AbstractParams;
 
 class Query extends AbstractAPI
 {
-    
-    use TraitAPI;
+    /**
+     * current action is query
+     * 
+     * @var string
+     */
+    protected $apiAction = 'query';
     
     /**
      * add the prop param instance
@@ -25,7 +29,7 @@ class Query extends AbstractAPI
      */
     public function pushProp(AbstractParams $prop)
     {
-        return $this->pushParamInstance($list, 'prop');
+        return $this->pushParamInstance($prop, 'prop');
     }
     
     
@@ -48,6 +52,11 @@ class Query extends AbstractAPI
      */
     public function pushMeta(AbstractParams $meta){
         return $this->pushParamInstance($meta, 'meta');
+    }
+
+    public function prepareResult($result)
+    {
+        return $result;
     }
 
 }

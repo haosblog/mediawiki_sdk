@@ -48,7 +48,7 @@ abstract class AbstractParams
         $optionName = $this->initOptionName(); // first, we need the option name with the pre name
         $resultOptions = [];
         
-        foreach($options as $key -> $value) { // each the params, and find out the legavls
+        foreach($options as $key => $value) { // each the params, and find out the legavls
             if(in_array($key, $this->optionNameWithoutPre)) {
                 $resultOptions[$this->optionNamePre . $key] = $value;
             } elseif(in_array($key, $optionName)) {

@@ -33,10 +33,10 @@ class Application
      * 
      * @param array $config
      */
-    public function __construct($config)
+    public function __construct($baseUrl = '')
     {
-        if (isset($config['domain'])) {
-            $this->baseUrl = $config['domain'];
+        if (!empty($baseUrl)) {
+            $this->baseUrl = $baseUrl;
         }
     }
 
@@ -50,6 +50,11 @@ class Application
         return $this->baseUrl;
     }
 
+    /**
+     * 
+     * 
+     * @return Query
+     */
     public function getQuery()
     {
         if (!$this->actionQuery instanceof Query) {
