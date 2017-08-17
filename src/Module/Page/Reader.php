@@ -21,7 +21,7 @@ class Reader extends AbstractModule
             'parse' => '',
         ]));
         
-        $query->title = $title;
+        $query->titles = $title;
         
         return $query->send();
     }
