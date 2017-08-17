@@ -161,7 +161,7 @@ abstract class AbstractAPI
         if (empty($body)) {
             return false;
         }
-        file_put_contents('D:\hao\web\debug.txt', $body);
+        
         try {
             $contents = \GuzzleHttp\json_decode($body, true);
             Log::debug('API response decoded:', compact('contents'));
@@ -201,12 +201,12 @@ abstract class AbstractAPI
     {
         $options = array_merge($this->params, $this->paramInstancesToOptions());
         $options = $this->setOptionsFormat($options);
+        $options['action'] = $this->apiAction;
         
         $method = $this->requestMethod;
-        $url = $this->app->getBaseUrl() .'?action='. $this->apiAction;
+        $url = $this->app->getBaseUrl();
         $http = $this->getHttp();
-        $jsonResult = call_user_func_array([$http, $method], [$url, $options]);
-        echo(get_class($jsonResult));die;
+        $jsonResult = call_user_func_array([$http, $method], [$url, $options])->getBody();
         $result = $this->parseJSON($jsonResult);
         
         return $this->prepareResult($result);

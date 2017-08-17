@@ -54,8 +54,15 @@ class Query extends AbstractAPI
         return $this->pushParamInstance($meta, 'meta');
     }
 
-    public function prepareResult($result)
+    public function prepareResult($data)
     {
+        $result = reset($data['query']['pages']);
+//        if(isset($data['continue'])){
+//            $this->continue = $data['continue']['continue'];
+//            $this->rvcontinue = $data['continue']['rvcontinue'];
+//            $result[] = reset($this->send());
+//        }
+        
         return $result;
     }
 
